@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fay Ranches — Marketing Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1F3D22;--green-mid:#3C5A3E;--green-light:#E1F5EE;--green-pale:#F2F7F2;
+  --amber-bg:#FAEEDA;--amber-dark:#633806;
+  --red-bg:#FCEBEB;--red:#A32D2D;
+  --done-bg:#EAF3DE;--done:#3B6D11;
+  --blue-bg:#E6F1FB;--blue:#0C447C;
+  --border:#E0E8E0;--text:#1A1A1A;--muted:#6B7280;
+  --plan-bg:#EEF0FF;--plan:#3C3489;
+  --notif-bg:#FFF8E6;--notif:#B45309;
+}
+body{font-family:'DM Sans',sans-serif;background:#F5F7F5;color:var(--text);min-height:100vh;font-size:14px}
+
+/* SIDEBAR */
+.sidebar{width:230px;background:var(--green);min-height:100vh;position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:100}
+.sb-logo{padding:1.5rem 1.25rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sb-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff}
+.sb-sub{font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.nav-sec{padding:1rem 0;flex:1}
+.nav-lbl{font-size:9px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.35);padding:0 1.25rem;margin-bottom:0.4rem}
+.nav-item{display:flex;align-items:center;gap:10px;padding:0.6rem 1.25rem;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:background 0.15s,color 0.15s;font-family:'DM Sans',sans-serif;position:relative}
+.nav-item:hover{background:rgba(255,255,255,0.08);color:#fff}
+.nav-item.active{background:rgba(255,255,255,0.13);color:#fff;font-weight:500}
+.ni{font-size:15px;width:18px;text-align:center}
+.nav-badge{background:#E24B4A;color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:auto}
+.sb-user{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,0.1)}
+.sb-user-lbl{font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:5px}
+.user-sel{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:12px;padding:0.5rem 0.75rem;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none}
+.user-sel option{background:#1F3D22}
+
+/* LAYOUT */
+.main{margin-left:230px;min-height:100vh}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0.85rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.back-btn{display:none;align-items:center;gap:5px;font-size:13px;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;padding:0.3rem 0.6rem;border-radius:6px}
+.back-btn:hover{background:var(--green-pale);color:var(--green)}
+.page-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--green)}
+.page-sub{font-size:12px;color:var(--muted)}
+.topbar-date{font-size:12px;color:var(--muted)}
+.content{padding:1.75rem 2rem;max-width:1100px}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.card-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--green);margin-bottom:1rem}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.25rem}
+.stat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;border-top:3px solid var(--green)}
+.stat-n{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--green)}
+.stat-l{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* BADGES */
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap;display:inline-block}
+.b-green{background:var(--green-light);color:var(--green-mid)}
+.b-plan{background:var(--plan-bg);color:var(--plan)}
+.b-amber{background:var(--amber-bg);color:var(--amber-dark)}
+.b-red{background:var(--red-bg);color:var(--red)}
+.b-done{background:var(--done-bg);color:var(--done)}
+.b-dark{background:var(--green);color:#fff}
+.b-blue{background:var(--blue-bg);color:var(--blue)}
+.b-complete{background:#EAF3DE;color:#3B6D11}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{background:var(--green-pale);color:var(--green-mid);font-weight:500;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;padding:0.6rem 0.75rem;text-align:left;border-bottom:1px solid var(--border)}
+.tbl td{padding:0.65rem 0.75rem;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--green-pale)}
+
+/* FORMS */
+.fi{width:100%;padding:0.6rem 0.75rem;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;outline:none;transition:border-color 0.15s}
+.fi:focus{border-color:var(--green-mid)}
+.fi.required-err{border-color:var(--red)}
+select.fi{cursor:pointer}
+textarea.fi{resize:vertical}
+.fg{margin-bottom:1rem}
+.fl{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px;display:block;letter-spacing:0.3px}
+.fl .req{color:var(--red);margin-left:2px}
+.fl .hint{font-weight:400;color:var(--muted);font-size:11px;margin-left:4px}
+.field-hint{font-size:11px;color:var(--muted);margin-top:3px;font-style:italic}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:0.55rem 1rem;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:opacity 0.15s,transform 0.1s}
+.btn:active{transform:scale(0.97)}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{opacity:0.88}
+.btn-ghost{background:#fff;color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--green-pale)}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid #F7C1C1}
+.btn-sm{padding:0.35rem 0.75rem;font-size:12px;border-radius:6px}
+
+/* AVATARS */
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;border:2px solid #fff;overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover}
+.av-lg{width:44px;height:44px;font-size:15px}
+.av-charlie{background:#F4C0D1;color:#72243E}
+.av-helen{background:#B5D4F4;color:#0C447C}
+.av-will{background:#9FE1CB;color:#085041}
+.av-sam{background:#C0DD97;color:#27500A}
+.av-thomas{background:#D3D1C7;color:#444441}
+.av-jeremy{background:#FAC775;color:#633806}
+.av-cluster{display:flex}
+.av-cluster .av{margin-left:-6px}
+.av-cluster .av:first-child{margin-left:0}
+
+/* PILLS */
+.pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.pill{display:flex;align-items:center;gap:5px;background:var(--green-pale);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:12px;cursor:pointer;transition:all 0.15s;user-select:none}
+.pill.on{background:var(--green-light);border-color:var(--green-mid);color:var(--green-mid);font-weight:500}
+
+/* KANBAN */
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.k-col{background:var(--green-pale);border-radius:10px;padding:0.75rem;min-height:150px}
+.k-col-hdr{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:0.75rem;display:flex;align-items:center;justify-content:space-between}
+.k-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:0.85rem;margin-bottom:0.6rem;cursor:pointer;transition:border-color 0.15s,transform 0.1s;position:relative}
+.k-card:hover{border-color:var(--green-mid);transform:translateY(-1px)}
+.k-card-title{font-size:13px;font-weight:500;margin-bottom:0.3rem;line-height:1.4;padding-right:20px}
+.k-card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:0.5rem}
+.notif-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;background:#E24B4A;border-radius:50%;border:1.5px solid #fff}
+
+/* MODALS */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;align-items:flex-start;justify-content:center;padding-top:40px;overflow-y:auto}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:1.75rem;width:680px;max-width:95vw;margin-bottom:40px}
+.modal-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--green);margin-bottom:0.25rem}
+.modal-sub{font-size:12px;color:var(--muted);margin-bottom:1.25rem}
+.modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
+.modal-section{background:var(--green-pale);border-radius:8px;padding:1rem;margin-bottom:1rem}
+.modal-section-title{font-size:12px;font-weight:600;color:var(--green-mid);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:0.75rem}
+
+/* TABS */
+.tab-row{display:flex;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
+.tab{padding:0.6rem 1rem;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+.tab.active{color:var(--green);border-bottom-color:var(--green)}
+
+/* VIEWS */
+.view{display:none}
+.view.active{display:block}
+.sec-lbl{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem}
+.divider{height:1px;background:var(--border);margin:1rem 0}
+.empty-state{text-align:center;padding:2.5rem 2rem;color:var(--muted)}
+.empty-state .es-icon{font-size:32px;margin-bottom:0.6rem}
+.empty-state .es-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:0.4rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* PROJECT CARDS */
+.proj-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;transition:border-color 0.15s,transform 0.1s;border-left:4px solid var(--green);position:relative}
+.proj-card:hover{border-color:var(--green-mid);transform:translateY(-2px)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem}
+.cat-events{border-left-color:#D85A30}
+.cat-digital{border-left-color:#185FA5}
+.cat-brand{border-left-color:#D4537E}
+.cat-li{border-left-color:#639922}
+.cat-admin{border-left-color:#888780}
+.cat-endstate{border-left-color:#1D9E75}
+.proj-notif{position:absolute;top:10px;right:10px;background:#E24B4A;color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:2px 7px}
+
+/* CHECK BOX */
+.check-box{width:17px;height:17px;border:1.5px solid #D1D5DB;border-radius:4px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.check-box.done{background:var(--green);border-color:var(--green)}
+.check-box.done::after{content:'';width:9px;height:5px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px);display:block}
+
+/* COMMENTS */
+.comment-box{background:var(--green-pale);border-radius:8px;padding:0.75rem;margin-bottom:0.6rem}
+.progress-bar{height:5px;background:var(--border);border-radius:3px;margin-top:6px;overflow:hidden}
+.progress-fill{height:100%;background:var(--green);border-radius:3px;transition:width 0.4s}
+
+/* NOTIFICATIONS */
+.notif-panel{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem}
+.notif-item{display:flex;align-items:flex-start;gap:10px;padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:13px}
+.notif-item:last-child{border-bottom:none}
+.notif-item.unread{background:var(--notif-bg);border-radius:6px;padding:0.6rem 8px;margin:-2px -4px}
+.notif-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.notif-text{flex:1;line-height:1.4}
+.notif-time{font-size:11px;color:var(--muted);white-space:nowrap}
+
+/* CONTACT CARD */
+.contact-row{display:flex;align-items:center;gap:10px;padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:13px}
+.contact-row:last-child{border-bottom:none}
+
+/* LINKS */
+.link-chip{display:inline-flex;align-items:center;gap:4px;background:var(--blue-bg);color:var(--blue);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:500;text-decoration:none;margin:2px}
+.link-chip:hover{opacity:0.8}
+.attach-chip{display:inline-flex;align-items:center;gap:4px;background:var(--green-light);color:var(--green-mid);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:500;margin:2px;cursor:pointer}
+
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.team-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform 0.15s,border-color 0.15s}
+.team-card:hover{transform:translateY(-2px);border-color:var(--green-mid)}
+.team-card-top{background:var(--green-pale);padding:1.5rem 1.25rem 1rem;text-align:center;border-bottom:1px solid var(--border)}
+.tc-av{width:72px;height:72px;border-radius:50%;margin:0 auto 0.75rem;border:3px solid var(--green-light);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;overflow:hidden}
+.tc-av img{width:100%;height:100%;object-fit:cover}
+
+/* CALENDAR */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-hdr{font-size:11px;font-weight:500;color:var(--muted);text-align:center;padding:0.4rem 0;text-transform:uppercase;letter-spacing:0.5px}
+.cal-day{min-height:72px;background:#fff;border:1px solid var(--border);border-radius:6px;padding:0.35rem}
+.cal-day.today{border-color:var(--green);border-width:2px}
+.cal-day.other{opacity:0.4;background:var(--green-pale)}
+.cal-num{font-weight:500;color:var(--muted);margin-bottom:3px;font-size:11px}
+.cal-day.today .cal-num{color:var(--green);font-weight:700}
+.cal-ev{border-radius:3px;padding:1px 4px;font-size:10px;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.ev-g{background:var(--green-light);color:var(--green-mid)}
+.ev-a{background:var(--amber-bg);color:var(--amber-dark)}
+.ev-b{background:var(--blue-bg);color:var(--blue)}
+
+/* SUGGEST BOX */
+.suggest-box{border:1px dashed #C8D8C8;border-radius:8px;padding:0.65rem 0.75rem;display:flex;align-items:center;gap:8px;background:var(--green-pale)}
+.suggest-box input{flex:1;border:none;background:none;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none}
+
+/* FOCUS AREAS */
+.focus-area-card{border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:0.75rem;background:#fff}
+.course-row{background:var(--green-pale);border-radius:8px;padding:0.75rem;margin-bottom:0.5rem}
+.course-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted);margin-top:4px}
+.bullet-list{list-style:disc;padding-left:1.25rem;font-size:13px;color:var(--muted);line-height:1.7}
+.profile-av-wrap{position:relative;display:inline-block}
+.profile-av-edit{position:absolute;bottom:0;right:0;background:var(--green);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sb-logo"><div class="sb-brand">Fay Ranches</div><div class="sb-sub">Marketing Hub</div></div>
+  <div class="nav-sec">
+    <div class="nav-lbl">Workspace</div>
+    <button class="nav-item active" onclick="gotoView('home',this)"><span class="ni">&#9632;</span>Home<span class="nav-badge" id="nb-home" style="display:none">0</span></button>
+    <button class="nav-item" onclick="gotoView('meetings',this)"><span class="ni">&#128197;</span>Meetings</button>
+    <button class="nav-item" onclick="gotoView('projects',this)"><span class="ni">&#128203;</span>Projects</button>
+    <button class="nav-item" onclick="gotoView('calendar',this)"><span class="ni">&#128198;</span>Calendar</button>
+    <button class="nav-item" onclick="gotoView('team',this)"><span class="ni">&#128101;</span>Team</button>
+  </div>
+  <div class="sb-user">
+    <div class="sb-user-lbl">Signed in as</div>
+    <select class="user-sel" onchange="setUser(this.value)">
+      <option value="charlie">Charlie McFarlane (Admin)</option>
+      <option value="helen">Helen Clement</option>
+      <option value="will">Will Hanson</option>
+      <option value="sam">Sam Molloy</option>
+      <option value="thomas">Thomas Sarlo</option>
+      <option value="jeremy">Jeremy Richardson</option>
+    </select>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn" id="back-btn" onclick="goBack()">&#8592; <span id="back-label">Back</span></button>
+      <div><div class="page-title" id="page-title">Home</div><div class="page-sub" id="page-sub" style="display:none"></div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="topbar-date" id="topbar-date"></div>
+      <button class="btn btn-primary btn-sm" id="topbar-btn" style="display:none" onclick="topbarAction()"></button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- HOME -->
+    <div id="view-home" class="view active">
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-n" id="h-proj">0</div><div class="stat-l">Active projects</div></div>
+        <div class="stat"><div class="stat-n" id="h-tasks">0</div><div class="stat-l">My open tasks</div></div>
+        <div class="stat"><div class="stat-n" id="h-done">0</div><div class="stat-l">Tasks completed</div></div>
+        <div class="stat"><div class="stat-n" id="h-notif" style="color:#E24B4A">0</div><div class="stat-l">New notifications</div></div>
+      </div>
+      <div id="notif-panel-wrap"></div>
+      <div class="two-col">
+        <div class="card"><div class="card-hdr"><div class="card-title">My open tasks</div></div><div id="home-tasks"></div></div>
+        <div class="card"><div class="card-hdr"><div class="card-title">My active projects</div></div><div id="home-projs"></div></div>
+      </div>
+    </div>
+
+    <!-- MEETINGS -->
+    <div id="view-meetings" class="view">
+      <div class="tab-row">
+        <button class="tab active" onclick="showSubTab('mt','upcoming',this)">Upcoming</button>
+        <button class="tab" onclick="showSubTab('mt','archive',this)">Archive</button>
+      </div>
+      <div id="mt-upcoming">
+        <div class="card">
+          <div class="card-hdr">
+            <div><div class="card-title" id="mtg-title">Next Marketing Meeting</div><div style="font-size:12px;color:var(--muted)" id="mtg-meta"></div></div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-ghost btn-sm" onclick="window.print()">Print</button>
+              <button class="btn btn-primary btn-sm" id="edit-mtg-btn" style="display:none" onclick="openModal('mtg-modal')">Edit meeting</button>
+            </div>
+          </div>
+          <div class="sec-lbl">Attendees</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem" id="att-pills"></div>
+          <div class="sec-lbl">Agenda</div>
+          <div id="agenda-list"></div>
+          <div class="divider"></div>
+          <div class="sec-lbl">Suggest a topic</div>
+          <div class="suggest-box" style="margin-top:4px">
+            <span style="color:var(--muted);font-size:16px">+</span>
+            <input id="sug-inp" type="text" placeholder="Suggest a topic...">
+            <button class="btn btn-primary btn-sm" onclick="addSuggestion()">Add</button>
+          </div>
+          <div id="sug-list"></div>
+          <div class="divider"></div>
+          <div class="sec-lbl">Meeting notes</div>
+          <textarea class="fi" id="mtg-notes" placeholder="Notes during the meeting..." style="min-height:120px;margin-top:4px"></textarea>
+        </div>
+      </div>
+      <div id="mt-archive" style="display:none">
+        <div class="card"><div class="card-title">Archive</div><div class="empty-state"><div class="es-icon">&#128197;</div><div class="es-title">No past meetings yet</div></div></div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div id="view-projects" class="view">
+      <div class="card-hdr" style="margin-bottom:1rem">
+        <div class="tab-row" style="margin:0;border:none">
+          <button class="tab active" onclick="showProjTab('active',this)">Active</button>
+          <button class="tab" onclick="showProjTab('completed',this)">Completed</button>
+          <button class="tab" onclick="showProjTab('trash',this)">&#128465; Trash</button>
+          <button class="tab" onclick="showProjTab('mine',this)">My projects</button>
+        </div>
+        <button class="btn btn-primary btn-sm" id="new-proj-btn" style="display:none" onclick="openNewProject()">+ New project</button>
+      </div>
+      <div id="ptab-active"><div class="proj-grid" id="proj-grid-active"></div><div id="proj-empty-active" class="empty-state" style="display:none"><div class="es-icon">&#128203;</div><div class="es-title">No active projects</div><div style="margin-top:0.75rem"><button class="btn btn-primary btn-sm" onclick="openNewProject()">+ Create first project</button></div></div></div>
+      <div id="ptab-completed" style="display:none"><div class="proj-grid" id="proj-grid-completed"></div><div id="proj-empty-completed" class="empty-state" style="display:none"><div class="es-icon">&#10003;</div><div class="es-title">No completed projects yet</div></div></div>
+      <div id="ptab-trash" style="display:none">
+        <div class="card"><div class="card-hdr"><div class="card-title">Trash</div><button class="btn btn-danger btn-sm" id="empty-trash-btn" onclick="emptyTrash()" style="display:none">Empty trash</button></div><div id="trash-list"></div></div>
+      </div>
+      <div id="ptab-mine" style="display:none"><div class="proj-grid" id="proj-grid-mine"></div><div id="proj-empty-mine" class="empty-state" style="display:none"><div class="es-icon">&#128203;</div><div class="es-title">No projects assigned to you</div></div></div>
+    </div>
+
+    <!-- PROJECT DETAIL -->
+    <div id="view-project-detail" class="view">
+      <div class="card" style="margin-bottom:0.75rem">
+        <div class="card-hdr">
+          <div style="flex:1">
+            <div class="sec-lbl">Background</div>
+            <div id="pd-bg" style="font-size:13px;color:var(--muted);line-height:1.6;max-width:700px"></div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:flex-start;flex-shrink:0">
+            <div id="pd-badges" style="display:flex;gap:5px;flex-wrap:wrap"></div>
+            <button class="btn btn-ghost btn-sm" id="pd-edit-btn" style="display:none" onclick="editCurrentProject()">Edit</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:0.5rem">
+          <div><div class="sec-lbl">Lead</div><div id="pd-lead" style="display:flex;align-items:center;gap:6px;font-size:13px"></div></div>
+          <div><div class="sec-lbl">Team</div><div id="pd-team" class="av-cluster"></div></div>
+          <div><div class="sec-lbl">Start date</div><div id="pd-start" style="font-size:13px;color:var(--muted)"></div></div>
+          <div><div class="sec-lbl">Due date</div><div id="pd-due" style="font-size:13px;color:var(--muted)"></div></div>
+          <div><div class="sec-lbl">Progress</div><div id="pd-pct" style="font-size:13px;font-weight:500;color:var(--green)"></div><div class="progress-bar" style="width:120px"><div class="progress-fill" id="pd-prog"></div></div></div>
+        </div>
+        <div class="divider" style="margin-bottom:0.75rem"></div>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px">
+            <div class="sec-lbl">Documents &amp; links</div>
+            <div id="pd-links"></div>
+            <div id="pd-link-form" style="display:none;margin-top:6px">
+              <div class="fr2" style="gap:8px;margin-bottom:6px">
+                <input class="fi" id="pl-label" placeholder="Label">
+                <input class="fi" id="pl-url" placeholder="https://...">
+              </div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <button class="btn btn-primary btn-sm" onclick="addProjLink()">Add link</button>
+                <label class="btn btn-ghost btn-sm" style="cursor:pointer">&#128206; Attach file<input type="file" id="pl-file" style="display:none" onchange="attachProjFile(this)"></label>
+                <button class="btn btn-ghost btn-sm" onclick="hideProjLinkForm()">Done</button>
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="pd-link-btn" style="display:none;margin-top:4px" onclick="showProjLinkForm()">+ Add link or file</button>
+          </div>
+          <div style="flex:1;min-width:200px">
+            <div class="sec-lbl">Key contacts</div>
+            <div id="pd-contacts"></div>
+            <button class="btn btn-ghost btn-sm" id="pd-contact-btn" style="display:none;margin-top:4px" onclick="openModal('contact-modal')">+ Add contact</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-row">
+        <button class="tab active" onclick="showSubTab('dt','tasks',this)">Tasks</button>
+        <button class="tab" onclick="showSubTab('dt','meetings',this)">Meetings</button>
+        <button class="tab" onclick="showSubTab('dt','comments',this)">Updates &amp; comments</button>
+        <button class="tab" onclick="showSubTab('dt','trashed',this)">&#128465; Task trash</button>
+      </div>
+
+      <div id="dt-tasks">
+        <div class="card-hdr" style="margin-bottom:1rem">
+          <div class="tab-row" style="margin:0;border:none">
+            <button class="tab active" onclick="showSubTab('tv','board',this)">Board</button>
+            <button class="tab" onclick="showSubTab('tv','list',this)">List</button>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openNewTask()">+ Add task</button>
+        </div>
+        <div id="tv-board"><div class="kanban" id="task-kanban"></div></div>
+        <div id="tv-list" style="display:none">
+          <div class="card">
+            <table class="tbl"><thead><tr><th style="width:28px"></th><th>Task</th><th>Assigned to</th><th>Due</th><th>Priority</th><th>Status</th><th>Links</th></tr></thead>
+            <tbody id="task-tbody"></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <div id="dt-meetings" style="display:none">
+        <div class="card">
+          <div class="card-hdr"><div class="card-title">Project meetings</div><button class="btn btn-primary btn-sm" id="add-proj-mtg-btn" onclick="openModal('proj-mtg-modal')" style="display:none">+ Log meeting</button></div>
+          <div id="proj-meetings-list"></div>
+        </div>
+      </div>
+
+      <div id="dt-comments" style="display:none">
+        <div class="card">
+          <div class="card-title">Updates &amp; comments</div>
+          <div id="comments-list"></div>
+          <div class="divider"></div>
+          <div style="display:flex;gap:8px;align-items:flex-start">
+            <div class="av" id="comment-av" style="margin-top:4px;flex-shrink:0"></div>
+            <div style="flex:1">
+              <textarea class="fi" id="comment-input" placeholder="Share an update, note, or question..." style="min-height:70px"></textarea>
+              <button class="btn btn-primary btn-sm" style="margin-top:6px" onclick="addComment()">Post update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="dt-trashed" style="display:none">
+        <div class="card">
+          <div class="card-hdr"><div class="card-title">Deleted tasks</div></div>
+          <div id="trashed-tasks-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div id="view-calendar" class="view">
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title">May 2026</div>
+          <div style="display:flex;gap:10px;font-size:11px;align-items:center">
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--green-light);margin-right:4px"></span>Meeting</span>
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--amber-bg);margin-right:4px"></span>Deadline</span>
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--blue-bg);margin-right:4px"></span>Content</span>
+          </div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div id="view-team" class="view">
+      <div class="tab-row">
+        <button class="tab active" onclick="showSubTab('tt','profiles',this)">Team profiles</button>
+        <button class="tab" onclick="showSubTab('tt','training',this)">Training plans</button>
+      </div>
+      <div id="tt-profiles"><div class="team-grid" id="team-grid"></div></div>
+      <div id="tt-training" style="display:none"><div id="training-list"></div></div>
+    </div>
+
+    <!-- MEMBER PROFILE -->
+    <div id="view-member" class="view">
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-hdr">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div class="profile-av-wrap">
+              <div class="tc-av" id="mp-av" style="width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;overflow:hidden;border:3px solid var(--green-light)"></div>
+              <button class="profile-av-edit" id="mp-photo-btn" style="display:none" onclick="document.getElementById('mp-photo-inp').click()">&#9998;</button>
+              <input type="file" id="mp-photo-inp" accept="image/*" style="display:none" onchange="uploadPhoto(this)">
+            </div>
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--green)" id="mp-name"></div>
+              <div style="font-size:13px;color:var(--muted)" id="mp-role"></div>
+              <div id="mp-badges" style="display:flex;gap:6px;margin-top:6px"></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+            <button class="btn btn-ghost btn-sm" id="mp-edit-btn" style="display:none" onclick="openMemberEdit()">Edit profile</button>
+            <button class="btn btn-ghost btn-sm" id="mp-jd-btn" style="display:none" onclick="document.getElementById('jd-file-inp').click()">&#128196; Upload job description</button>
+            <input type="file" id="jd-file-inp" accept=".pdf,.doc,.docx" style="display:none" onchange="uploadJD(this)">
+            <button class="btn btn-primary btn-sm" id="mp-focus-btn" style="display:none" onclick="openFocusModal()">+ Add focus area</button>
+          </div>
+        </div>
+        <div id="mp-bio" style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:0.25rem"></div>
+        <div id="mp-jd-display" style="margin-top:0.75rem"></div>
+        <div class="divider"></div>
+        <div style="display:flex;gap:2rem;flex-wrap:wrap">
+          <div><div class="sec-lbl">Projects</div><div id="mp-pcount" style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--green)"></div></div>
+          <div><div class="sec-lbl">Open tasks</div><div id="mp-tcount" style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--green)"></div></div>
+          <div><div class="sec-lbl">Courses</div><div id="mp-ccount" style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--green)"></div></div>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:16px;color:var(--green);margin-bottom:0.75rem;font-weight:600">Training plan</div>
+      <div id="mp-training"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- NEW PROJECT -->
+<div class="modal-bg" id="proj-modal">
+  <div class="modal">
+    <div class="modal-title" id="proj-modal-title">New project</div>
+    <div class="modal-sub">Fill in the details below to create a new project. Fields marked with <span style="color:var(--red)">*</span> are required.</div>
+    <input type="hidden" id="proj-edit-id">
+
+    <div class="modal-section">
+      <div class="modal-section-title">Project identity</div>
+      <div class="fg">
+        <label class="fl">Project name <span class="req">*</span><span class="hint">— Format: "Project Name - Company Name" (e.g. Big Sky PBR - Fay Ranches, Vol. 12 - Land Investor, Spring Campaign - Endstate, Golf Outing - FRCF)</span></label>
+        <input class="fi" id="p-name" placeholder="e.g. Big Sky PBR - Fay Ranches">
+        <div class="field-hint">Company names: Fay Ranches, Endstate, Land Investor, FRCF</div>
+      </div>
+      <div class="fr2">
+        <div class="fg">
+          <label class="fl">Category <span class="req">*</span></label>
+          <select class="fi" id="p-cat"><option>Events</option><option>Digital</option><option>Brand</option><option>Land Investor</option><option>Admin</option><option>Endstate</option></select>
+        </div>
+        <div class="fg">
+          <label class="fl">Priority <span class="req">*</span></label>
+          <select class="fi" id="p-priority"><option>High</option><option>Medium</option><option>Low</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Team &amp; timeline</div>
+      <div class="fg">
+        <label class="fl">Project lead <span class="req">*</span><span class="hint">— The primary owner responsible for this project</span></label>
+        <select class="fi" id="p-lead">
+          <option value="">— Select a lead —</option>
+          <option value="charlie">Charlie McFarlane</option><option value="helen">Helen Clement</option><option value="will">Will Hanson</option><option value="sam">Sam Molloy</option><option value="thomas">Thomas Sarlo</option><option value="jeremy">Jeremy Richardson</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Team members<span class="hint">— Select everyone who will be working on this project</span></label><div class="pill-row" id="p-members"></div></div>
+      <div class="fr2">
+        <div class="fg">
+          <label class="fl">Start date</label>
+          <input type="date" class="fi" id="p-start">
+          <div class="field-hint">Defaults to today if left blank</div>
+        </div>
+        <div class="fg">
+          <label class="fl">Due date</label>
+          <input type="date" class="fi" id="p-due">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Background</div>
+      <div class="fg">
+        <label class="fl">Background <span class="req">*</span><span class="hint">— 1-2 sentences: what is this project, why does it matter, when is it happening, and who is it for?</span></label>
+        <textarea class="fi" id="p-bg" placeholder="e.g. This project covers all deliverables for the Big Sky PBR sponsorship in June 2026. Fay Ranches is a presenting sponsor and needs branded booth materials, social content, and email campaigns ahead of the event." style="min-height:80px"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Documents &amp; links</div>
+      <div id="p-links-temp"></div>
+      <div class="fr2" style="gap:8px;margin-bottom:6px">
+        <input class="fi" id="p-link-label" placeholder="Label (e.g. Brief, Contract)">
+        <input class="fi" id="p-link-url" placeholder="https://...">
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="addNewProjLink()">+ Add link</button>
+        <label class="btn btn-ghost btn-sm" style="cursor:pointer">&#128206; Attach file<input type="file" id="p-file-inp" style="display:none" onchange="addNewProjFile(this)"></label>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('proj-modal')">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="proj-delete-btn" style="display:none;margin-right:auto" onclick="moveProjectToTrash()">&#128465; Move to trash</button>
+      <button class="btn btn-primary" onclick="saveProject()">Save project</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW TASK -->
+<div class="modal-bg" id="task-modal">
+  <div class="modal">
+    <div class="modal-title" id="task-modal-title">New task</div>
+    <input type="hidden" id="task-edit-id">
+    <div class="fg"><label class="fl">Task name <span class="req">*</span></label><input class="fi" id="t-name" placeholder="What needs to be done?"></div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Status</label><select class="fi" id="t-status"><option>Not started</option><option>In progress</option><option>Review</option><option>Done</option></select></div>
+      <div class="fg"><label class="fl">Priority</label><select class="fi" id="t-priority"><option>High</option><option>Medium</option><option>Low</option></select></div>
+    </div>
+    <div class="fg"><label class="fl">Due date</label><input type="date" class="fi" id="t-due"></div>
+    <div class="fg"><label class="fl">Assigned to <span class="hint">— Select one or more team members</span></label><div class="pill-row" id="t-assign"></div></div>
+    <div class="fg"><label class="fl">Notes</label><textarea class="fi" id="t-notes" placeholder="Context, instructions, or additional details..."></textarea></div>
+    <div class="fg">
+      <label class="fl">Links &amp; attachments</label>
+      <div id="task-links-display" style="margin-bottom:6px"></div>
+      <div style="display:flex;gap:8px;margin-bottom:6px">
+        <input class="fi" id="tl-label" placeholder="Label" style="flex:1">
+        <input class="fi" id="tl-url" placeholder="https://..." style="flex:2">
+        <button class="btn btn-ghost btn-sm" onclick="addTaskLink()">Add</button>
+      </div>
+      <label class="btn btn-ghost btn-sm" style="cursor:pointer;display:inline-flex">&#128206; Attach file<input type="file" id="t-file-inp" style="display:none" onchange="attachTaskFile(this)"></label>
+      <div id="task-attach-display" style="margin-top:6px"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('task-modal')">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="task-delete-btn" style="display:none;margin-right:auto" onclick="deleteTask()">&#128465; Delete task</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save task</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEETING EDIT -->
+<div class="modal-bg" id="mtg-modal">
+  <div class="modal">
+    <div class="modal-title">Edit meeting</div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Title</label><input class="fi" id="m-title" value="Marketing Meeting"></div>
+      <div class="fg"><label class="fl">Date</label><input type="date" class="fi" id="m-date"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Time</label><input class="fi" id="m-time" placeholder="2:00 PM MT"></div>
+      <div class="fg"><label class="fl">Location</label><input class="fi" id="m-loc" placeholder="Bozeman HQ"></div>
+    </div>
+    <div class="fg"><label class="fl">Agenda (one item per line)</label><textarea class="fi" id="m-agenda" style="min-height:150px" placeholder="Topic — Owner"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('mtg-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMeeting()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT MEETING LOG -->
+<div class="modal-bg" id="proj-mtg-modal">
+  <div class="modal">
+    <div class="modal-title">Log project meeting</div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Meeting title</label><input class="fi" id="pm-title" placeholder="e.g. Kick-off call"></div>
+      <div class="fg"><label class="fl">Date</label><input type="date" class="fi" id="pm-date"></div>
+    </div>
+    <div class="fg"><label class="fl">Attendees</label><div class="pill-row" id="pm-attendees"></div></div>
+    <div class="fg"><label class="fl">Notes</label><textarea class="fi" id="pm-notes" placeholder="Key decisions, action items, outcomes..." style="min-height:100px"></textarea></div>
+    <div class="fg"><label class="fl">Link to meeting notes (optional)</label><input class="fi" id="pm-link" placeholder="https://..."></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('proj-mtg-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProjMeeting()">Log meeting</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal-bg" id="contact-modal">
+  <div class="modal">
+    <div class="modal-title">Add key contact</div>
+    <div class="modal-sub">Add an external vendor, partner, or contact associated with this project.</div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Name <span class="req">*</span></label><input class="fi" id="c-name" placeholder="Full name"></div>
+      <div class="fg"><label class="fl">Company / Role</label><input class="fi" id="c-company" placeholder="e.g. WSTR Media, Event Coordinator"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Email</label><input class="fi" id="c-email" placeholder="email@example.com"></div>
+      <div class="fg"><label class="fl">Phone</label><input class="fi" id="c-phone" placeholder="(406) 555-0000"></div>
+    </div>
+    <div class="fg"><label class="fl">Notes</label><input class="fi" id="c-notes" placeholder="Any additional context..."></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('contact-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveContact()">Add contact</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBER EDIT MODAL -->
+<div class="modal-bg" id="member-modal">
+  <div class="modal">
+    <div class="modal-title">Edit profile</div>
+    <input type="hidden" id="me-id">
+    <div class="fr2">
+      <div class="fg"><label class="fl">Name</label><input class="fi" id="me-name"></div>
+      <div class="fg"><label class="fl">Role / Title</label><input class="fi" id="me-role"></div>
+    </div>
+    <div class="fg"><label class="fl">Bio</label><textarea class="fi" id="me-bio" placeholder="Short bio..."></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('member-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveMemberProfile()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOCUS AREA MODAL -->
+<div class="modal-bg" id="focus-modal">
+  <div class="modal">
+    <div class="modal-title" id="focus-modal-title">Add focus area</div>
+    <div class="fg"><label class="fl">Focus area title <span class="req">*</span><span class="hint">— The main topic or skill area</span></label><input class="fi" id="fa-title" placeholder="e.g. Digital Marketing & SEO"></div>
+    <div class="fg"><label class="fl">Why this topic matters</label><textarea class="fi" id="fa-why" placeholder="Explain why this focus area is important for this team member's role and growth..."></textarea></div>
+    <div class="fg"><label class="fl">What to learn <span class="hint">— One bullet point per line</span></label><textarea class="fi" id="fa-what" placeholder="Understand GEO and AI-driven search&#10;Master Google Analytics 4&#10;Build and manage email campaigns"></textarea></div>
+    <div class="divider"></div>
+    <div class="card-title" style="font-size:14px;margin-bottom:0.75rem">Courses under this focus area</div>
+    <div id="fa-courses-list"></div>
+    <div style="background:var(--green-pale);border-radius:8px;padding:1rem;margin-top:0.5rem">
+      <div class="sec-lbl" style="margin-bottom:0.5rem">Add a course</div>
+      <div class="fg"><label class="fl">Course name</label><input class="fi" id="fc-name" placeholder="e.g. Advanced Google Analytics 4"></div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Platform</label><input class="fi" id="fc-platform" placeholder="Coursera, LinkedIn Learning..."></div>
+        <div class="fg"><label class="fl">Cost</label><input class="fi" id="fc-cost" placeholder="Free / $49"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Hours</label><input class="fi" id="fc-hours" placeholder="e.g. 8 hours"></div>
+        <div class="fg"><label class="fl">Due date <span class="hint">— 1 hr/week schedule</span></label><input type="date" class="fi" id="fc-due"></div>
+      </div>
+      <div class="fg"><label class="fl">Course link</label><input class="fi" id="fc-link" placeholder="https://..."></div>
+      <button class="btn btn-ghost btn-sm" onclick="addFACourse()">+ Add course</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('focus-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFocusArea()">Save focus area</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const MEMBERS=[
+  {id:'charlie',name:'Charlie McFarlane',first:'Charlie',role:'Director of Marketing',admin:true,cls:'av-charlie',ini:'CM',bio:'',photo:null,training:[],jd:null},
+  {id:'helen',name:'Helen Clement',first:'Helen',role:'Marketing Manager',admin:false,cls:'av-helen',ini:'HC',bio:'',photo:null,training:[],jd:null},
+  {id:'will',name:'Will Hanson',first:'Will',role:'Digital Strategist',admin:false,cls:'av-will',ini:'WH',bio:'',photo:null,training:[],jd:null},
+  {id:'sam',name:'Sam Molloy',first:'Sam',role:'Land Investor Manager',admin:false,cls:'av-sam',ini:'SM',bio:'',photo:null,training:[],jd:null},
+  {id:'thomas',name:'Thomas Sarlo',first:'Thomas',role:'Graphic Designer',admin:false,cls:'av-thomas',ini:'TS',bio:'',photo:null,training:[],jd:null},
+  {id:'jeremy',name:'Jeremy Richardson',first:'Jeremy',role:'Agent Social Media Coordinator',admin:false,cls:'av-jeremy',ini:'JR',bio:'',photo:null,training:[],jd:null},
+];
+
+const CAL_EVENTS=[
+  {day:6,label:'MKT Meeting',type:'g'},{day:10,label:'WSTR deadline',type:'a'},
+  {day:20,label:'MKT Meeting',type:'g'},{day:26,label:'FR e-blast',type:'b'},
+  {day:28,label:'LI e-blast',type:'b'},
+];
+
+let projects=[];
+let tasks=[];
+let trashedTasks=[];
+let trashedProjects=[];
+let suggestions=[];
+let comments={};
+let projMeetings={};
+let projLinks={};
+let projAttaches={};
+let projContacts={};
+let notifications=[];
+let meeting={title:'Marketing Meeting',date:'',time:'',location:'Bozeman HQ',agenda:[]};
+let attendees=new Set(MEMBERS.map(m=>m.id));
+let currentUser='charlie';
+let currentProjectId=null;
+let currentMemberId=null;
+let projMemberSel=[];
+let taskAssignSel=[];
+let pmAttendeesSel=[];
+let editingTaskId=null;
+let editingProjId=null;
+let editingFocusIdx=null;
+let faTempCourses=[];
+let taskLinksTemp=[];
+let taskAttachTemp=[];
+let newProjLinksTemp=[];
+let newProjAttachTemp=[];
+let projIdCounter=1;
+let taskIdCounter=1;
+
+const M=id=>MEMBERS.find(m=>m.id===id);
+const isAdmin=()=>currentUser==='charlie';
+const canEditMember=id=>isAdmin()||currentUser===id;
+
+function av(id,lg=false){
+  const m=M(id);if(!m)return '';
+  if(m.photo)return `<div class="av${lg?' av-lg':''}" style="border:2px solid #fff"><img src="${m.photo}"></div>`;
+  return `<div class="av${lg?' av-lg':''} ${m.cls}" title="${m.name}">${m.ini}</div>`;
+}
+function avCluster(ids){return `<div class="av-cluster">${ids.map(id=>av(id)).join('')}</div>`;}
+function sBadge(s){
+  const map={'Active':'b-green','Planning':'b-plan','Review':'b-amber','Complete':'b-complete','On Hold':'b-amber',
+    'Not started':'b-amber','In progress':'b-green','Done':'b-done'};
+  return `<span class="badge ${map[s]||'b-amber'}">${s}</span>`;
+}
+function pBadge(p){const map={'High':'b-red','Medium':'b-amber','Low':'b-done'};return `<span class="badge ${map[p]||'b-amber'}">${p}</span>`;}
+function catCls(c){const map={'Events':'cat-events','Digital':'cat-digital','Brand':'cat-brand','Land Investor':'cat-li','Admin':'cat-admin','Endstate':'cat-endstate'};return map[c]||'';}
+function now(){return new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
+function today(){return new Date().toISOString().split('T')[0];}
+
+function addNotif(type,text,projectId){
+  notifications.unshift({type,text,projectId,time:now(),read:false,id:Date.now()});
+  renderNotifBadge();
+}
+function renderNotifBadge(){
+  const unread=notifications.filter(n=>!n.read&&n.assigned.includes?.(currentUser)!==false).length;
+  const myNotifs=notifications.filter(n=>!n.read&&(n.forAll||n.toUser===currentUser||n.toUsers?.includes(currentUser)));
+  const nb=document.getElementById('nb-home');
+  nb.textContent=myNotifs.length;
+  nb.style.display=myNotifs.length>0?'inline':'none';
+  document.getElementById('h-notif').textContent=myNotifs.length;
+}
+
+function pushNotif(toUsers,icon,text,projId){
+  notifications.unshift({toUsers,icon,text,projId,time:now(),read:false,id:Date.now()});
+  renderNotifBadge();
+}
+
+function setUser(id){
+  currentUser=id;
+  const m=M(id);
+  const cav=document.getElementById('comment-av');
+  cav.className=`av ${m.cls}`;
+  if(m.photo){cav.innerHTML=`<img src="${m.photo}">`;}else{cav.textContent=m.ini;}
+  renderAll();
+}
+
+function renderAll(){
+  renderStats();renderHomeTasks();renderHomeProjs();renderNotifPanel();
+  renderAttendees();renderAgenda();renderSuggestions();
+  renderProjGrids();renderCalendar();renderTeamGrid();renderTrainingList();
+  document.getElementById('new-proj-btn').style.display=isAdmin()?'inline-flex':'none';
+  document.getElementById('edit-mtg-btn').style.display=isAdmin()?'inline-flex':'none';
+  document.getElementById('pd-edit-btn').style.display=isAdmin()?'inline-flex':'none';
+  document.getElementById('pd-link-btn').style.display=isAdmin()?'inline-flex':'none';
+  document.getElementById('pd-contact-btn').style.display=isAdmin()?'inline-flex':'none';
+  document.getElementById('add-proj-mtg-btn').style.display=isAdmin()?'inline-flex':'none';
+  renderNotifBadge();
+  if(currentProjectId)renderProjectDetail();
+  if(currentMemberId)renderMemberDetail();
+}
+
+function renderStats(){
+  const mine=tasks.filter(t=>t.assigned.includes(currentUser));
+  document.getElementById('h-proj').textContent=projects.filter(p=>p.status==='Active'&&p.members.includes(currentUser)).length;
+  document.getElementById('h-tasks').textContent=mine.filter(t=>t.status!=='Done').length;
+  document.getElementById('h-done').textContent=mine.filter(t=>t.status==='Done').length;
+}
+
+function renderNotifPanel(){
+  const myNotifs=notifications.filter(n=>n.toUsers?.includes(currentUser)||n.forAll);
+  const el=document.getElementById('notif-panel-wrap');
+  if(!myNotifs.length){el.innerHTML='';return;}
+  el.innerHTML=`<div class="notif-panel">
+    <div class="card-hdr" style="margin-bottom:0.75rem"><div class="card-title" style="margin:0">Notifications</div><button class="btn btn-ghost btn-sm" onclick="markAllRead()">Mark all read</button></div>
+    ${myNotifs.slice(0,5).map(n=>`<div class="notif-item${n.read?'':' unread'}">
+      <span class="notif-icon">${n.icon||'&#128276;'}</span>
+      <span class="notif-text">${n.text}${n.projId?` <span style="color:var(--green);cursor:pointer;font-size:12px" onclick="openProject(${n.projId})">View project</span>`:''}</span>
+      <span class="notif-time">${n.time}</span>
+    </div>`).join('')}
+  </div>`;
+}
+
+function markAllRead(){
+  notifications.filter(n=>n.toUsers?.includes(currentUser)||n.forAll).forEach(n=>n.read=true);
+  renderAll();
+}
+
+function renderHomeTasks(){
+  const el=document.getElementById('home-tasks');
+  const mine=tasks.filter(t=>t.assigned.includes(currentUser)&&t.status!=='Done').slice(0,5);
+  if(!mine.length){el.innerHTML='<div class="empty-state" style="padding:1.5rem 0"><div class="es-title">All caught up!</div></div>';return;}
+  el.innerHTML=mine.map(t=>{
+    const p=projects.find(x=>x.id===t.projectId);
+    return `<div style="display:flex;align-items:flex-start;gap:8px;padding:0.5rem 0;border-bottom:1px solid var(--border)">
+      <div class="check-box${t.status==='Done'?' done':''}" onclick="quickToggle(${t.id})"></div>
+      <div style="flex:1"><div style="font-size:13px">${t.name}</div><div style="font-size:11px;color:var(--muted)">${p?p.name:'—'}</div></div>
+      ${pBadge(t.priority)}
+    </div>`;
+  }).join('');
+}
+
+function renderHomeProjs(){
+  const el=document.getElementById('home-projs');
+  const list=projects.filter(p=>p.status==='Active'&&(isAdmin()||p.members.includes(currentUser))).slice(0,4);
+  if(!list.length){el.innerHTML='<div class="empty-state" style="padding:1.5rem 0"><div class="es-title">No active projects</div></div>';return;}
+  el.innerHTML=list.map(p=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="openProject(${p.id})">
+    <div><div style="font-size:13px;font-weight:500">${p.name}</div><div style="font-size:11px;color:var(--muted)">${p.cat}</div></div>
+    <div style="display:flex;align-items:center;gap:8px">${sBadge(p.status)}${avCluster(p.members.slice(0,3))}</div>
+  </div>`).join('');
+}
+
+function renderAttendees(){
+  document.getElementById('att-pills').innerHTML=MEMBERS.map(m=>`<div class="pill${attendees.has(m.id)?' on':''}" onclick="${isAdmin()?`toggleAtt('${m.id}',this)`:''}">
+    ${av(m.id)} ${m.first}
+  </div>`).join('');
+}
+function toggleAtt(id,el){attendees.has(id)?attendees.delete(id):attendees.add(id);el.classList.toggle('on');}
+
+function renderAgenda(){
+  document.getElementById('mtg-title').textContent=meeting.title||'Next Marketing Meeting';
+  document.getElementById('mtg-meta').textContent=[meeting.date,meeting.time,meeting.location].filter(Boolean).join(' · ');
+  const el=document.getElementById('agenda-list');
+  if(!meeting.agenda||!meeting.agenda.length){el.innerHTML=`<div style="color:var(--muted);font-size:13px;padding:0.5rem 0">${isAdmin()?'Click "Edit meeting" to add agenda items.':'No agenda items yet.'}</div>`;return;}
+  el.innerHTML=meeting.agenda.map((a,i)=>`<div style="display:flex;gap:10px;padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--muted);min-width:18px">${i+1}</span><span>${a}</span></div>`).join('');
+}
+
+function addSuggestion(){
+  const inp=document.getElementById('sug-inp');const v=inp.value.trim();if(!v)return;
+  suggestions.push({text:v,by:currentUser});inp.value='';renderSuggestions();
+}
+function renderSuggestions(){
+  const el=document.getElementById('sug-list');
+  if(!suggestions.length){el.innerHTML='';return;}
+  el.innerHTML='<div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.75rem">'+
+    suggestions.map((s,i)=>`<div style="display:flex;gap:10px;padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:13px">
+      <span style="color:var(--muted);min-width:18px">${(meeting.agenda||[]).length+i+1}</span>
+      <span style="flex:1">${s.text}</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)">${av(s.by)} Suggested
+      ${isAdmin()?`<button onclick="suggestions.splice(${i},1);renderSuggestions()" style="border:none;background:none;color:var(--red);cursor:pointer;font-size:16px;padding:0 2px">×</button>`:''}
+      </span></div>`).join('')+'</div>';
+}
+
+function saveMeeting(){
+  meeting.title=document.getElementById('m-title').value;
+  meeting.date=document.getElementById('m-date').value;
+  meeting.time=document.getElementById('m-time').value;
+  meeting.location=document.getElementById('m-loc').value;
+  meeting.agenda=document.getElementById('m-agenda').value.split('\n').map(s=>s.replace(/^\d+\.\s*/,'')).filter(Boolean);
+  closeModal('mtg-modal');renderAgenda();
+}
+
+function renderProjGrids(){
+  const types={
+    active:projects.filter(p=>p.status!=='Complete'&&!trashedProjects.find(t=>t.id===p.id)),
+    completed:projects.filter(p=>p.status==='Complete'),
+    mine:projects.filter(p=>p.members.includes(currentUser)&&p.status!=='Complete'),
+  };
+  Object.entries(types).forEach(([type,list])=>{
+    const visibleList=isAdmin()?list:list.filter(p=>p.members.includes(currentUser)||p.lead===currentUser);
+    const grid=document.getElementById(`proj-grid-${type}`);
+    const empty=document.getElementById(`proj-empty-${type}`);
+    if(!grid)return;
+    if(!visibleList.length){grid.innerHTML='';empty.style.display='block';return;}
+    empty.style.display='none';
+    grid.innerHTML=visibleList.map(p=>projCardHTML(p,type)).join('');
+  });
+  renderTrashList();
+}
+
+function projCardHTML(p,type){
+  const pt=tasks.filter(t=>t.projectId===p.id);
+  const done=pt.filter(t=>t.status==='Done').length;
+  const pct=pt.length?Math.round((done/pt.length)*100):0;
+  const myNotifs=notifications.filter(n=>n.projId===p.id&&!n.read&&(n.toUsers?.includes(currentUser)||n.forAll));
+  return `<div class="proj-card ${catCls(p.cat)}" onclick="openProject(${p.id})" style="${type==='completed'?'opacity:0.75':''}">
+    ${myNotifs.length?`<div class="proj-notif">&#128276; ${myNotifs.length}</div>`:''}
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.5rem">
+      <div style="font-weight:600;font-size:14px;line-height:1.3;padding-right:${myNotifs.length?'50px':'0'}">${p.name}</div>${sBadge(p.status)}
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:0.5rem">${p.cat}${p.due?' · Due '+p.due:''}</div>
+    ${p.bg?`<div style="font-size:12px;color:var(--muted);margin-bottom:0.5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${p.bg}</div>`:''}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.6rem">${avCluster(p.members)}<span style="font-size:11px;color:var(--muted)">${pt.length} task${pt.length!==1?'s':''}</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div style="font-size:10px;color:var(--muted);margin-top:3px">${pct}% complete</div>
+  </div>`;
+}
+
+function renderTrashList(){
+  const el=document.getElementById('trash-list');
+  const btn=document.getElementById('empty-trash-btn');
+  btn.style.display=trashedProjects.length?'inline-flex':'none';
+  if(!trashedProjects.length){el.innerHTML='<div class="empty-state"><div class="es-icon">&#128465;</div><div class="es-title">Trash is empty</div></div>';return;}
+  el.innerHTML=trashedProjects.map((p,i)=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--border)">
+    <div><div style="font-weight:500;font-size:13px">${p.name}</div><div style="font-size:11px;color:var(--muted)">Deleted ${p.deletedAt||''}</div></div>
+    <div style="display:flex;gap:6px">
+      <button class="btn btn-ghost btn-sm" onclick="restoreProject(${i})">Restore</button>
+      <button class="btn btn-danger btn-sm" onclick="permanentDeleteProject(${i})">Delete permanently</button>
+    </div>
+  </div>`).join('');
+}
+
+function openProject(id){
+  currentProjectId=id;
+  const p=projects.find(x=>x.id===id);if(!p)return;
+  notifications.filter(n=>n.projId===id).forEach(n=>{if(n.toUsers?.includes(currentUser)||n.forAll)n.read=true;});
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-project-detail').classList.add('active');
+  document.getElementById('back-btn').style.display='flex';
+  document.getElementById('back-label').textContent='Back to Projects';
+  document.getElementById('page-title').textContent=p.name;
+  document.getElementById('page-sub').textContent=p.cat+' · '+p.status;
+  document.getElementById('page-sub').style.display='block';
+  document.getElementById('topbar-btn').style.display='none';
+  if(!comments[id])comments[id]=[];
+  if(!projLinks[id])projLinks[id]=[];
+  if(!projAttaches[id])projAttaches[id]=[];
+  if(!projContacts[id])projContacts[id]=[];
+  if(!projMeetings[id])projMeetings[id]=[];
+  renderProjectDetail();
+  renderNotifBadge();
+}
+
+function renderProjectDetail(){
+  const p=projects.find(x=>x.id===currentProjectId);if(!p)return;
+  document.getElementById('pd-bg').textContent=p.bg||'No background provided.';
+  document.getElementById('pd-badges').innerHTML=sBadge(p.status)+' '+pBadge(p.priority);
+  const lead=M(p.lead);
+  document.getElementById('pd-lead').innerHTML=`${av(p.lead)}<span>${lead?lead.name:'—'}</span>`;
+  document.getElementById('pd-team').innerHTML=avCluster(p.members);
+  document.getElementById('pd-start').textContent=p.start||'—';
+  document.getElementById('pd-due').textContent=p.due||'No due date';
+  const pt=tasks.filter(t=>t.projectId===currentProjectId);
+  const done=pt.filter(t=>t.status==='Done').length;
+  const pct=pt.length?Math.round((done/pt.length)*100):0;
+  document.getElementById('pd-pct').textContent=pct+'%';
+  document.getElementById('pd-prog').style.width=pct+'%';
+  renderProjLinksSection();renderContactsSection();renderTaskKanban();renderTaskList();
+  renderTrashedTasks();renderComments();renderProjMeetings();
+}
+
+function renderProjLinksSection(){
+  const links=projLinks[currentProjectId]||[];
+  const attaches=projAttaches[currentProjectId]||[];
+  const el=document.getElementById('pd-links');
+  const allLinks=[
+    ...links.map((l,i)=>`<a href="${l.url}" target="_blank" class="link-chip">&#128279; ${l.label}</a>`),
+    ...attaches.map((a,i)=>`<span class="attach-chip" title="${a.name}">&#128206; ${a.name}</span>`),
+  ];
+  el.innerHTML=allLinks.length?allLinks.join(''):'<div style="font-size:12px;color:var(--muted)">No links yet.</div>';
+}
+function showProjLinkForm(){document.getElementById('pd-link-form').style.display='block';document.getElementById('pd-link-btn').style.display='none';}
+function hideProjLinkForm(){document.getElementById('pd-link-form').style.display='none';document.getElementById('pd-link-btn').style.display=isAdmin()?'inline-flex':'none';}
+function addProjLink(){
+  const label=document.getElementById('pl-label').value.trim();
+  const url=document.getElementById('pl-url').value.trim();
+  if(!label||!url)return;
+  if(!projLinks[currentProjectId])projLinks[currentProjectId]=[];
+  projLinks[currentProjectId].push({label,url});
+  document.getElementById('pl-label').value='';document.getElementById('pl-url').value='';
+  renderProjLinksSection();
+}
+function attachProjFile(inp){
+  const file=inp.files[0];if(!file)return;
+  if(!projAttaches[currentProjectId])projAttaches[currentProjectId]=[];
+  projAttaches[currentProjectId].push({name:file.name});
+  inp.value='';renderProjLinksSection();
+}
+
+function renderContactsSection(){
+  const contacts=projContacts[currentProjectId]||[];
+  const el=document.getElementById('pd-contacts');
+  if(!contacts.length){el.innerHTML='<div style="font-size:12px;color:var(--muted)">No contacts added.</div>';return;}
+  el.innerHTML=contacts.map((c,i)=>`<div class="contact-row">
+    <div style="flex:1">
+      <div style="font-weight:500;font-size:13px">${c.name}${c.company?` <span style="font-weight:400;color:var(--muted)">· ${c.company}</span>`:''}</div>
+      <div style="font-size:11px;color:var(--muted);display:flex;gap:10px;margin-top:2px;flex-wrap:wrap">
+        ${c.email?`<a href="mailto:${c.email}" style="color:var(--blue)">&#9993; ${c.email}</a>`:''}
+        ${c.phone?`<span>&#128222; ${c.phone}</span>`:''}
+        ${c.notes?`<span>${c.notes}</span>`:''}
+      </div>
+    </div>
+    ${isAdmin()?`<button onclick="removeContact(${i})" style="border:none;background:none;color:var(--red);cursor:pointer;font-size:16px">×</button>`:''}
+  </div>`).join('');
+}
+function removeContact(i){projContacts[currentProjectId].splice(i,1);renderContactsSection();}
+
+function saveContact(){
+  const name=document.getElementById('c-name').value.trim();if(!name)return alert('Name required');
+  if(!projContacts[currentProjectId])projContacts[currentProjectId]=[];
+  projContacts[currentProjectId].push({
+    name,company:document.getElementById('c-company').value.trim(),
+    email:document.getElementById('c-email').value.trim(),phone:document.getElementById('c-phone').value.trim(),
+    notes:document.getElementById('c-notes').value.trim(),
+  });
+  ['c-name','c-company','c-email','c-phone','c-notes'].forEach(id=>document.getElementById(id).value='');
+  closeModal('contact-modal');renderContactsSection();
+}
+
+function renderTaskKanban(){
+  const statuses=['Not started','In progress','Review','Done'];
+  const pt=tasks.filter(t=>t.projectId===currentProjectId);
+  document.getElementById('task-kanban').innerHTML=statuses.map(s=>{
+    const cards=pt.filter(t=>t.status===s);
+    return `<div class="k-col">
+      <div class="k-col-hdr"><span>${s}</span><span style="background:var(--border);border-radius:10px;padding:1px 7px;font-size:10px">${cards.length}</span></div>
+      ${cards.length?cards.map(t=>`<div class="k-card" onclick="openEditTask(${t.id})">
+        <div class="k-card-title">${t.name}</div>
+        ${t.notes?`<div style="font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px">${t.notes}</div>`:''}
+        ${(t.links&&t.links.length)?t.links.map(l=>`<a href="${l.url}" target="_blank" class="link-chip" onclick="event.stopPropagation()" style="font-size:10px;padding:2px 6px;margin:2px 2px 0 0">&#128279; ${l.label}</a>`).join(''):''}
+        <div class="k-card-meta" style="margin-top:6px">${pBadge(t.priority)}${avCluster(t.assigned)}</div>
+        ${t.due?`<div style="font-size:10px;color:var(--muted);margin-top:4px">Due ${t.due}</div>`:''}
+      </div>`).join(''):'<div style="font-size:12px;color:var(--muted);text-align:center;padding:1rem 0">Empty</div>'}
+    </div>`;
+  }).join('');
+}
+
+function renderTaskList(){
+  const pt=tasks.filter(t=>t.projectId===currentProjectId);
+  const tb=document.getElementById('task-tbody');
+  if(!pt.length){tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:1.5rem">No tasks yet</td></tr>';return;}
+  tb.innerHTML=pt.map(t=>`<tr>
+    <td><div class="check-box${t.status==='Done'?' done':''}" onclick="quickToggle(${t.id})"></div></td>
+    <td><div style="font-weight:500;cursor:pointer" onclick="openEditTask(${t.id})">${t.name}</div>${t.notes?`<div style="font-size:11px;color:var(--muted)">${t.notes}</div>`:''}</td>
+    <td>${avCluster(t.assigned)}</td>
+    <td style="font-size:12px;color:var(--muted)">${t.due||'—'}</td>
+    <td>${pBadge(t.priority)}</td>
+    <td>${sBadge(t.status)}</td>
+    <td>${(t.links||[]).map(l=>`<a href="${l.url}" target="_blank" class="link-chip">&#128279; ${l.label}</a>`).join('')}${(t.attaches||[]).map(a=>`<span class="attach-chip">&#128206; ${a.name}</span>`).join('')}</td>
+  </tr>`).join('');
+}
+
+function renderTrashedTasks(){
+  const el=document.getElementById('trashed-tasks-list');
+  const mine=trashedTasks.filter(t=>t.projectId===currentProjectId);
+  if(!mine.length){el.innerHTML='<div class="empty-state"><div class="es-icon">&#128465;</div><div class="es-title">No deleted tasks</div></div>';return;}
+  el.innerHTML=mine.map((t,i)=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--border)">
+    <div><div style="font-weight:500;font-size:13px">${t.name}</div><div style="font-size:11px;color:var(--muted)">Deleted ${t.deletedAt||''}</div></div>
+    <div style="display:flex;gap:6px">
+      <button class="btn btn-ghost btn-sm" onclick="restoreTask(${i})">Restore</button>
+      <button class="btn btn-danger btn-sm" onclick="permanentDeleteTask(${i})">Delete permanently</button>
+    </div>
+  </div>`).join('');
+}
+
+function renderComments(){
+  const el=document.getElementById('comments-list');
+  const list=comments[currentProjectId]||[];
+  if(!list.length){el.innerHTML='<div style="color:var(--muted);font-size:13px;padding:0.5rem 0">No updates yet.</div>';return;}
+  el.innerHTML=list.map(c=>`<div class="comment-box">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">${av(c.by)}<div><div style="font-size:12px;font-weight:500;color:var(--green)">${M(c.by)?M(c.by).name:c.by}</div><div style="font-size:10px;color:var(--muted)">${c.time}</div></div></div>
+    <div style="font-size:13px;line-height:1.5">${c.text}</div>
+  </div>`).join('');
+}
+
+function addComment(){
+  const inp=document.getElementById('comment-input');const v=inp.value.trim();if(!v)return;
+  if(!comments[currentProjectId])comments[currentProjectId]=[];
+  comments[currentProjectId].push({by:currentUser,text:v,time:now()});
+  const p=projects.find(x=>x.id===currentProjectId);
+  const others=p.members.filter(id=>id!==currentUser);
+  if(others.length)pushNotif(others,'&#128172;',`${M(currentUser).first} commented on <strong>${p.name}</strong>: "${v.substring(0,40)}${v.length>40?'…':''}"`,currentProjectId);
+  inp.value='';renderComments();renderNotifBadge();
+}
+
+function renderProjMeetings(){
+  const el=document.getElementById('proj-meetings-list');
+  const list=projMeetings[currentProjectId]||[];
+  if(!list.length){el.innerHTML='<div class="empty-state" style="padding:1.5rem 0"><div class="es-icon">&#128197;</div><div class="es-title">No meetings logged yet</div><div style="font-size:13px;color:var(--muted)">'+(isAdmin()?'Click "+ Log meeting" to add one.':'No meetings have been logged for this project.')+'</div></div>';return;}
+  el.innerHTML=list.map((m,i)=>`<div style="border:1px solid var(--border);border-radius:8px;padding:0.85rem;margin-bottom:0.6rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem">
+      <div style="font-weight:500;font-size:14px">${m.title}</div>
+      <span style="font-size:12px;color:var(--muted)">${m.date}</span>
+    </div>
+    ${m.attendees&&m.attendees.length?`<div style="margin-bottom:0.4rem">${avCluster(m.attendees)}</div>`:''}
+    ${m.notes?`<div style="font-size:13px;color:var(--muted);line-height:1.5">${m.notes}</div>`:''}
+    ${m.link?`<a href="${m.link}" target="_blank" class="link-chip" style="margin-top:6px;display:inline-flex">&#128279; View notes</a>`:''}
+  </div>`).join('');
+}
+
+function saveProjMeeting(){
+  const title=document.getElementById('pm-title').value.trim();if(!title)return;
+  if(!projMeetings[currentProjectId])projMeetings[currentProjectId]=[];
+  projMeetings[currentProjectId].push({
+    title,date:document.getElementById('pm-date').value,
+    attendees:[...pmAttendeesSel],
+    notes:document.getElementById('pm-notes').value.trim(),
+    link:document.getElementById('pm-link').value.trim(),
+  });
+  ['pm-title','pm-date','pm-notes','pm-link'].forEach(id=>document.getElementById(id).value='');
+  closeModal('proj-mtg-modal');renderProjMeetings();
+}
+
+function quickToggle(id){
+  const t=tasks.find(x=>x.id===id);if(!t)return;
+  if(!isAdmin()&&!t.assigned.includes(currentUser))return;
+  const prev=t.status;
+  t.status=t.status==='Done'?'Not started':'Done';
+  if(t.status==='Done'){
+    const p=projects.find(x=>x.id===t.projectId);
+    const others=t.assigned.filter(id=>id!==currentUser);
+    if(p&&others.length)pushNotif(others,'&#10003;',`${M(currentUser).first} completed task <strong>${t.name}</strong> in ${p.name}`,t.projectId);
+  }
+  renderAll();
+}
+
+function openNewProject(){
+  editingProjId=null;
+  document.getElementById('proj-modal-title').textContent='New project';
+  document.getElementById('proj-edit-id').value='';
+  ['p-name','p-bg','p-link-label','p-link-url'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('p-start').value=today();
+  document.getElementById('p-due').value='';
+  document.getElementById('proj-delete-btn').style.display='none';
+  newProjLinksTemp=[];newProjAttachTemp=[];
+  renderNewProjLinksTemp();
+  projMemberSel=[];buildPills('p-members',projMemberSel);
+  openModal('proj-modal');
+}
+
+function editCurrentProject(){
+  const p=projects.find(x=>x.id===currentProjectId);if(!p)return;
+  editingProjId=p.id;
+  document.getElementById('proj-modal-title').textContent='Edit project';
+  document.getElementById('proj-edit-id').value=p.id;
+  document.getElementById('p-name').value=p.name;
+  document.getElementById('p-cat').value=p.cat;
+  document.getElementById('p-priority').value=p.priority;
+  document.getElementById('p-lead').value=p.lead;
+  document.getElementById('p-start').value=p.start||'';
+  document.getElementById('p-due').value=p.due||'';
+  document.getElementById('p-bg').value=p.bg||'';
+  document.getElementById('proj-delete-btn').style.display='inline-flex';
+  newProjLinksTemp=[];newProjAttachTemp=[];
+  renderNewProjLinksTemp();
+  projMemberSel=[...p.members];buildPills('p-members',projMemberSel);
+  openModal('proj-modal');
+}
+
+function addNewProjLink(){
+  const label=document.getElementById('p-link-label').value.trim();
+  const url=document.getElementById('p-link-url').value.trim();
+  if(!label||!url)return;
+  newProjLinksTemp.push({label,url});
+  document.getElementById('p-link-label').value='';document.getElementById('p-link-url').value='';
+  renderNewProjLinksTemp();
+}
+function addNewProjFile(inp){
+  const file=inp.files[0];if(!file)return;
+  newProjAttachTemp.push({name:file.name});inp.value='';renderNewProjLinksTemp();
+}
+function renderNewProjLinksTemp(){
+  const el=document.getElementById('p-links-temp');
+  el.innerHTML=[
+    ...newProjLinksTemp.map((l,i)=>`<a href="${l.url}" target="_blank" class="link-chip">&#128279; ${l.label} <span onclick="event.preventDefault();newProjLinksTemp.splice(${i},1);renderNewProjLinksTemp()" style="margin-left:4px;cursor:pointer">×</span></a>`),
+    ...newProjAttachTemp.map((a,i)=>`<span class="attach-chip">&#128206; ${a.name} <span onclick="newProjAttachTemp.splice(${i},1);renderNewProjLinksTemp()" style="margin-left:4px;cursor:pointer">×</span></span>`),
+  ].join('');
+}
+
+function saveProject(){
+  const name=document.getElementById('p-name').value.trim();
+  const lead=document.getElementById('p-lead').value;
+  const bg=document.getElementById('p-bg').value.trim();
+  if(!name){document.getElementById('p-name').classList.add('required-err');return alert('Project name is required');}
+  if(!lead){document.getElementById('p-lead').classList.add('required-err');return alert('Please select a project lead');}
+  if(!bg){document.getElementById('p-bg').classList.add('required-err');return alert('Please add a brief background');}
+  const data={
+    name,cat:document.getElementById('p-cat').value,
+    priority:document.getElementById('p-priority').value,
+    status:'Active',lead,
+    members:projMemberSel.length?projMemberSel:[lead],
+    start:document.getElementById('p-start').value||today(),
+    due:document.getElementById('p-due').value,bg,
+  };
+  if(editingProjId){
+    const p=projects.find(x=>x.id===editingProjId);
+    if(p){Object.assign(p,data);}
+    if(newProjLinksTemp.length)projLinks[editingProjId]=[...(projLinks[editingProjId]||[]),...newProjLinksTemp];
+    if(newProjAttachTemp.length)projAttaches[editingProjId]=[...(projAttaches[editingProjId]||[]),...newProjAttachTemp];
+  } else {
+    data.id=projIdCounter++;
+    projects.push(data);
+    projLinks[data.id]=[...newProjLinksTemp];
+    projAttaches[data.id]=[...newProjAttachTemp];
+    const others=data.members.filter(id=>id!==currentUser);
+    if(others.length)pushNotif(others,'&#128203;',`You've been added to a new project: <strong>${data.name}</strong>`,data.id);
+  }
+  ['p-name','p-lead','p-bg'].forEach(id=>document.getElementById(id).classList.remove('required-err'));
+  closeModal('proj-modal');renderAll();
+  if(editingProjId&&currentProjectId===editingProjId)renderProjectDetail();
+}
+
+function moveProjectToTrash(){
+  if(!editingProjId)return;
+  const p=projects.find(x=>x.id===editingProjId);if(!p)return;
+  if(!confirm(`Move "${p.name}" to trash?`))return;
+  p.deletedAt=now();
+  trashedProjects.push(p);
+  projects=projects.filter(x=>x.id!==editingProjId);
+  closeModal('proj-modal');goBack();
+}
+function restoreProject(i){
+  const p=trashedProjects[i];
+  delete p.deletedAt;
+  projects.push(p);
+  trashedProjects.splice(i,1);
+  renderAll();
+}
+function permanentDeleteProject(i){
+  if(!confirm('Permanently delete? This cannot be undone.'))return;
+  trashedProjects.splice(i,1);renderTrashList();
+}
+function emptyTrash(){
+  if(!confirm('Permanently delete all trashed projects?'))return;
+  trashedProjects=[];renderTrashList();
+}
+
+function openNewTask(){
+  editingTaskId=null;taskLinksTemp=[];taskAttachTemp=[];
+  document.getElementById('task-modal-title').textContent='New task';
+  document.getElementById('task-edit-id').value='';
+  ['t-name','t-notes','t-due'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('t-status').value='Not started';
+  document.getElementById('t-priority').value='High';
+  document.getElementById('task-delete-btn').style.display='none';
+  taskAssignSel=[];buildPills('t-assign',taskAssignSel);
+  renderTaskLinksTemp();openModal('task-modal');
+}
+
+function openEditTask(id){
+  const t=tasks.find(x=>x.id===id);if(!t)return;
+  editingTaskId=id;taskLinksTemp=[...(t.links||[])];taskAttachTemp=[...(t.attaches||[])];
+  document.getElementById('task-modal-title').textContent='Edit task';
+  document.getElementById('task-edit-id').value=id;
+  document.getElementById('t-name').value=t.name;
+  document.getElementById('t-status').value=t.status;
+  document.getElementById('t-priority').value=t.priority;
+  document.getElementById('t-due').value=t.due||'';
+  document.getElementById('t-notes').value=t.notes||'';
+  document.getElementById('task-delete-btn').style.display=isAdmin()?'inline-flex':'none';
+  taskAssignSel=[...t.assigned];buildPills('t-assign',taskAssignSel);
+  renderTaskLinksTemp();openModal('task-modal');
+}
+
+function renderTaskLinksTemp(){
+  document.getElementById('task-links-display').innerHTML=taskLinksTemp.map((l,i)=>`<a href="${l.url}" target="_blank" class="link-chip">&#128279; ${l.label} <span onclick="event.preventDefault();taskLinksTemp.splice(${i},1);renderTaskLinksTemp()" style="margin-left:4px;cursor:pointer">×</span></a>`).join('');
+  document.getElementById('task-attach-display').innerHTML=taskAttachTemp.map((a,i)=>`<span class="attach-chip">&#128206; ${a.name} <span onclick="taskAttachTemp.splice(${i},1);renderTaskLinksTemp()" style="margin-left:4px;cursor:pointer">×</span></span>`).join('');
+}
+function addTaskLink(){
+  const label=document.getElementById('tl-label').value.trim();
+  const url=document.getElementById('tl-url').value.trim();
+  if(!label||!url)return;
+  taskLinksTemp.push({label,url});
+  document.getElementById('tl-label').value='';document.getElementById('tl-url').value='';
+  renderTaskLinksTemp();
+}
+function attachTaskFile(inp){const file=inp.files[0];if(!file)return;taskAttachTemp.push({name:file.name});inp.value='';renderTaskLinksTemp();}
+
+function saveTask(){
+  const name=document.getElementById('t-name').value.trim();
+  if(!name)return alert('Task name is required');
+  const data={name,projectId:currentProjectId,status:document.getElementById('t-status').value,priority:document.getElementById('t-priority').value,due:document.getElementById('t-due').value,assigned:taskAssignSel.length?taskAssignSel:[currentUser],notes:document.getElementById('t-notes').value,links:[...taskLinksTemp],attaches:[...taskAttachTemp]};
+  if(editingTaskId){const t=tasks.find(x=>x.id===editingTaskId);if(t)Object.assign(t,data);}
+  else{
+    data.id=taskIdCounter++;tasks.push(data);
+    const p=projects.find(x=>x.id===currentProjectId);
+    const others=data.assigned.filter(id=>id!==currentUser);
+    if(p&&others.length)pushNotif(others,'&#128203;',`${M(currentUser).first} assigned you a task: <strong>${name}</strong> in ${p.name}`,currentProjectId);
+  }
+  closeModal('task-modal');renderAll();
+}
+
+function deleteTask(){
+  if(!editingTaskId)return;
+  const t=tasks.find(x=>x.id===editingTaskId);
+  if(t){t.deletedAt=now();trashedTasks.push(t);tasks=tasks.filter(x=>x.id!==editingTaskId);}
+  editingTaskId=null;closeModal('task-modal');renderAll();
+}
+function restoreTask(i){tasks.push(trashedTasks[i]);trashedTasks.splice(i,1);renderAll();}
+function permanentDeleteTask(i){if(!confirm('Permanently delete?'))return;trashedTasks.splice(i,1);renderTrashedTasks();}
+
+function renderCalendar(){
+  const el=document.getElementById('cal-grid');
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html=days.map(d=>`<div class="cal-hdr">${d}</div>`).join('');
+  const firstDay=new Date(2026,4,1).getDay();
+  for(let i=0;i<firstDay;i++)html+=`<div class="cal-day other"><div class="cal-num">${30-firstDay+i+1}</div></div>`;
+  for(let d=1;d<=31;d++){
+    const evs=CAL_EVENTS.filter(e=>e.day===d);
+    const td=tasks.filter(t=>t.due===`2026-05-${String(d).padStart(2,'0')}`&&(isAdmin()||t.assigned.includes(currentUser)));
+    html+=`<div class="cal-day${d===6?' today':''}"><div class="cal-num">${d}</div>
+      ${evs.map(e=>`<div class="cal-ev ev-${e.type}">${e.label}</div>`).join('')}
+      ${td.map(t=>`<div class="cal-ev ev-a">${t.name.substring(0,12)}${t.name.length>12?'…':''}</div>`).join('')}
+    </div>`;
+  }
+  el.innerHTML=html;
+}
+
+function renderTeamGrid(){
+  document.getElementById('team-grid').innerHTML=MEMBERS.map(m=>{
+    const mp=projects.filter(p=>p.members.includes(m.id)).length;
+    const mt=tasks.filter(t=>t.assigned.includes(m.id)&&t.status!=='Done').length;
+    return `<div class="team-card" onclick="openMember('${m.id}')">
+      <div class="team-card-top">
+        <div class="tc-av ${m.photo?'':m.cls}">${m.photo?`<img src="${m.photo}">`:`${m.ini}`}</div>
+        <div style="font-weight:600;font-size:15px;margin-top:0.25rem">${m.name}</div>
+        <div style="font-size:12px;color:var(--muted)">${m.role}</div>
+        ${m.admin?'<div style="margin-top:5px"><span class="badge b-dark" style="font-size:10px">Admin</span></div>':''}
+      </div>
+      <div style="padding:1rem 1.25rem">
+        <div style="display:flex;justify-content:space-around;text-align:center">
+          <div><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--green)">${mp}</div><div style="font-size:10px;color:var(--muted)">Projects</div></div>
+          <div><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--green)">${mt}</div><div style="font-size:10px;color:var(--muted)">Tasks</div></div>
+          <div><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--green)">${m.training.reduce((a,f)=>a+(f.courses||[]).length,0)}</div><div style="font-size:10px;color:var(--muted)">Courses</div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTrainingList(){
+  document.getElementById('training-list').innerHTML=MEMBERS.map(m=>`<div class="card" style="cursor:pointer" onclick="openMember('${m.id}')">
+    <div class="card-hdr">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="av av-lg ${m.photo?'':m.cls}" style="width:44px;height:44px;font-size:15px">${m.photo?`<img src="${m.photo}">`:`${m.ini}`}</div>
+        <div><div style="font-weight:600;font-size:15px">${m.name}</div><div style="font-size:12px;color:var(--muted)">${m.role}</div></div>
+      </div>
+      <span class="badge ${m.training&&m.training.length?'b-green':'b-amber'}">${m.training&&m.training.length?m.training.reduce((a,f)=>a+(f.courses||[]).length,0)+' courses':'No plan yet'}</span>
+    </div>
+    ${m.training&&m.training.length?`<div style="display:flex;gap:6px;flex-wrap:wrap">${m.training.map(fa=>`<span class="badge b-plan">${fa.title}</span>`).join('')}</div>`:
+    '<div style="font-size:13px;color:var(--muted)">No training plan yet.</div>'}
+  </div>`).join('');
+}
+
+function openMember(id){
+  currentMemberId=id;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-member').classList.add('active');
+  document.getElementById('back-btn').style.display='flex';
+  document.getElementById('back-label').textContent='Back to Team';
+  document.getElementById('page-sub').style.display='none';
+  document.getElementById('topbar-btn').style.display='none';
+  renderMemberDetail();
+}
+
+function renderMemberDetail(){
+  const m=M(currentMemberId);if(!m)return;
+  document.getElementById('page-title').textContent=m.name;
+  const avEl=document.getElementById('mp-av');
+  avEl.className=`tc-av ${m.photo?'':m.cls}`;
+  avEl.style.cssText='width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;overflow:hidden;border:3px solid var(--green-light)';
+  avEl.innerHTML=m.photo?`<img src="${m.photo}" style="width:100%;height:100%;object-fit:cover">`:`${m.ini}`;
+  const canEdit=canEditMember(m.id);
+  document.getElementById('mp-photo-btn').style.display=canEdit?'flex':'none';
+  document.getElementById('mp-edit-btn').style.display=canEdit?'inline-flex':'none';
+  document.getElementById('mp-jd-btn').style.display=canEdit?'inline-flex':'none';
+  document.getElementById('mp-focus-btn').style.display=canEdit?'inline-flex':'none';
+  document.getElementById('mp-name').textContent=m.name;
+  document.getElementById('mp-role').textContent=m.role;
+  document.getElementById('mp-badges').innerHTML=(m.admin?'<span class="badge b-dark">Admin</span>':'')+`${currentUser===m.id?' <span class="badge b-green">You</span>':''}`;
+  document.getElementById('mp-bio').textContent=m.bio||(canEdit?'No bio yet. Click "Edit profile" to add one.':'');
+  const jdEl=document.getElementById('mp-jd-display');
+  if(m.jd){
+    jdEl.innerHTML=`<div style="display:flex;align-items:center;gap:8px;padding:0.6rem 0.75rem;background:var(--green-pale);border-radius:8px;border:1px solid var(--border)">
+      <span style="font-size:18px">&#128196;</span>
+      <div style="flex:1"><div style="font-size:13px;font-weight:500">${m.jdName}</div><div style="font-size:11px;color:var(--muted)">Job description</div></div>
+      <a href="${m.jd}" download="${m.jdName}" class="btn btn-ghost btn-sm">Download</a>
+      ${canEdit?`<button class="btn btn-danger btn-sm" onclick="removeJD()">Remove</button>`:''}
+    </div>`;
+  } else {jdEl.innerHTML='';}
+  document.getElementById('mp-pcount').textContent=projects.filter(p=>p.members.includes(m.id)).length;
+  document.getElementById('mp-tcount').textContent=tasks.filter(t=>t.assigned.includes(m.id)&&t.status!=='Done').length;
+  document.getElementById('mp-ccount').textContent=m.training.reduce((a,f)=>a+(f.courses||[]).length,0);
+  renderMemberTraining();
+}
+
+function renderMemberTraining(){
+  const m=M(currentMemberId);if(!m)return;
+  const el=document.getElementById('mp-training');
+  const canEdit=canEditMember(m.id);
+  if(!m.training||!m.training.length){
+    el.innerHTML=`<div class="empty-state"><div class="es-icon">&#128218;</div><div class="es-title">No training plan yet</div><div style="font-size:13px;color:var(--muted);margin-top:0.5rem">${canEdit?'Click "+ Add focus area" to build a training plan.':'No training plan added yet.'}</div></div>`;
+    return;
+  }
+  el.innerHTML=m.training.map((fa,fi)=>`<div class="focus-area-card">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.5rem">
+      <div style="font-weight:600;font-size:15px;color:var(--green)">${fa.title}</div>
+      ${canEdit?`<div style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="editFocusArea(${fi})">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteFocusArea(${fi})">Remove</button></div>`:''}
+    </div>
+    ${fa.why?`<div style="font-size:13px;margin-bottom:0.75rem;line-height:1.6"><strong style="color:var(--text)">Why this matters:</strong> <span style="color:var(--muted)">${fa.why}</span></div>`:''}
+    ${fa.what&&fa.what.length?`<div style="margin-bottom:0.75rem"><div class="sec-lbl">What to learn</div><ul class="bullet-list">${fa.what.map(w=>`<li>${w}</li>`).join('')}</ul></div>`:''}
+    ${fa.courses&&fa.courses.length?`<div><div class="sec-lbl">Courses (1 hr/week schedule)</div>${fa.courses.map((c,ci)=>`<div class="course-row">
+      <div style="font-weight:500;font-size:13px">${c.link?`<a href="${c.link}" target="_blank" style="color:var(--green);text-decoration:none">&#128279; ${c.name}</a>`:c.name}</div>
+      <div class="course-meta">
+        ${c.platform?`<span>&#127979; ${c.platform}</span>`:''}
+        ${c.cost?`<span>&#128176; ${c.cost}</span>`:''}
+        ${c.hours?`<span>&#8987; ${c.hours}</span>`:''}
+        ${c.due?`<span>&#128197; Due ${c.due}</span>`:''}
+      </div>
+      ${canEdit?`<button onclick="deleteCourse(${fi},${ci})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:11px;margin-top:4px;padding:0">Remove course</button>`:''}
+    </div>`).join('')}</div>`:''}
+  </div>`).join('');
+}
+
+function openMemberEdit(){
+  const m=M(currentMemberId);if(!m)return;
+  document.getElementById('me-id').value=m.id;
+  document.getElementById('me-name').value=m.name;
+  document.getElementById('me-role').value=m.role;
+  document.getElementById('me-bio').value=m.bio||'';
+  openModal('member-modal');
+}
+function saveMemberProfile(){
+  const m=M(currentMemberId);if(!m)return;
+  m.name=document.getElementById('me-name').value.trim()||m.name;
+  m.role=document.getElementById('me-role').value.trim()||m.role;
+  m.bio=document.getElementById('me-bio').value.trim();
+  closeModal('member-modal');renderAll();
+}
+
+function uploadPhoto(inp){
+  const file=inp.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{const m=M(currentMemberId);if(m){m.photo=e.target.result;}renderAll();};
+  reader.readAsDataURL(file);
+}
+
+function uploadJD(inp){
+  const file=inp.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const m=M(currentMemberId);if(!m)return;
+    m.jd=e.target.result;m.jdName=file.name;
+    renderMemberDetail();
+  };
+  reader.readAsDataURL(file);
+}
+function removeJD(){const m=M(currentMemberId);if(!m)return;m.jd=null;m.jdName=null;renderMemberDetail();}
+
+function openFocusModal(){
+  editingFocusIdx=null;faTempCourses=[];
+  document.getElementById('focus-modal-title').textContent='Add focus area';
+  ['fa-title','fa-why','fa-what','fc-name','fc-platform','fc-cost','fc-hours','fc-link'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fc-due').value='';
+  renderFACourses();openModal('focus-modal');
+}
+function editFocusArea(idx){
+  const m=M(currentMemberId);if(!m)return;
+  const fa=m.training[idx];if(!fa)return;
+  editingFocusIdx=idx;faTempCourses=[...(fa.courses||[]).map(c=>({...c}))];
+  document.getElementById('focus-modal-title').textContent='Edit focus area';
+  document.getElementById('fa-title').value=fa.title||'';
+  document.getElementById('fa-why').value=fa.why||'';
+  document.getElementById('fa-what').value=(fa.what||[]).join('\n');
+  renderFACourses();openModal('focus-modal');
+}
+function deleteFocusArea(idx){const m=M(currentMemberId);if(!m)return;if(!confirm('Remove this focus area?'))return;m.training.splice(idx,1);renderMemberDetail();}
+function deleteCourse(fi,ci){const m=M(currentMemberId);if(!m)return;m.training[fi].courses.splice(ci,1);renderMemberDetail();}
+function addFACourse(){
+  const name=document.getElementById('fc-name').value.trim();if(!name)return;
+  faTempCourses.push({name,platform:document.getElementById('fc-platform').value.trim(),cost:document.getElementById('fc-cost').value.trim(),hours:document.getElementById('fc-hours').value.trim(),due:document.getElementById('fc-due').value,link:document.getElementById('fc-link').value.trim()});
+  ['fc-name','fc-platform','fc-cost','fc-hours','fc-link'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fc-due').value='';
+  renderFACourses();
+}
+function renderFACourses(){
+  const el=document.getElementById('fa-courses-list');
+  if(!faTempCourses.length){el.innerHTML='';return;}
+  el.innerHTML=faTempCourses.map((c,i)=>`<div class="course-row" style="margin-bottom:0.5rem">
+    <div style="font-weight:500;font-size:13px">${c.name}</div>
+    <div class="course-meta">${c.platform?`<span>${c.platform}</span>`:''}${c.cost?`<span>${c.cost}</span>`:''}${c.hours?`<span>${c.hours}</span>`:''}${c.due?`<span>Due ${c.due}</span>`:''}${c.link?`<a href="${c.link}" target="_blank" style="color:var(--blue)">View</a>`:''}</div>
+    <button onclick="faTempCourses.splice(${i},1);renderFACourses()" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:11px;padding:0;margin-top:3px">Remove</button>
+  </div>`).join('');
+}
+function saveFocusArea(){
+  const title=document.getElementById('fa-title').value.trim();if(!title)return alert('Focus area title required');
+  const m=M(currentMemberId);if(!m)return;
+  const fa={title,why:document.getElementById('fa-why').value.trim(),what:document.getElementById('fa-what').value.split('\n').map(s=>s.trim()).filter(Boolean),courses:[...faTempCourses]};
+  if(!m.training)m.training=[];
+  if(editingFocusIdx!==null)m.training[editingFocusIdx]=fa;else m.training.push(fa);
+  closeModal('focus-modal');renderAll();
+}
+
+function buildPills(containerId,selArr){
+  document.getElementById(containerId).innerHTML=MEMBERS.map(m=>`<div class="pill${selArr.includes(m.id)?' on':''}" onclick="togglePill('${m.id}','${containerId}')">
+    ${av(m.id)} ${m.first}
+  </div>`).join('');
+}
+function togglePill(id,containerId){
+  const arr=containerId==='p-members'?projMemberSel:containerId==='t-assign'?taskAssignSel:pmAttendeesSel;
+  arr.includes(id)?arr.splice(arr.indexOf(id),1):arr.push(id);
+  buildPills(containerId,arr);
+}
+
+function openModal(id){
+  if(id==='proj-mtg-modal'){pmAttendeesSel=[];buildPills('pm-attendees',pmAttendeesSel);}
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function showSubTab(group,name,btn){
+  const prefix=group+'-';
+  document.querySelectorAll(`[id^="${prefix}"]`).forEach(el=>el.style.display='none');
+  const t=document.getElementById(`${prefix}${name}`);if(t)t.style.display='block';
+  const scope=btn.closest('.tab-row');
+  if(scope)scope.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function showProjTab(name,btn){
+  ['active','completed','trash','mine'].forEach(t=>{
+    const el=document.getElementById('ptab-'+t);if(el)el.style.display='none';
+  });
+  const el=document.getElementById('ptab-'+name);if(el)el.style.display='block';
+  document.querySelectorAll('#view-projects .tab-row .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  if(name==='trash')renderTrashList();
+}
+
+function gotoView(v,btn){
+  if(v!=='projects'&&v!=='team'){currentProjectId=null;currentMemberId=null;}
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  if(btn)btn.classList.add('active');
+  document.getElementById('back-btn').style.display='none';
+  document.getElementById('page-sub').style.display='none';
+  const titles={home:'Home',meetings:'Meetings',projects:'Projects',calendar:'Content Calendar',team:'Team'};
+  document.getElementById('page-title').textContent=titles[v]||v;
+  document.getElementById('topbar-btn').style.display='none';
+}
+
+function goBack(){
+  const inDetail=document.getElementById('view-project-detail').classList.contains('active');
+  const inMember=document.getElementById('view-member').classList.contains('active');
+  currentProjectId=null;currentMemberId=null;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('back-btn').style.display='none';
+  document.getElementById('page-sub').style.display='none';
+  document.getElementById('topbar-btn').style.display='none';
+  if(inDetail){
+    document.getElementById('view-projects').classList.add('active');
+    document.getElementById('page-title').textContent='Projects';
+    document.querySelectorAll('.nav-item')[2].classList.add('active');
+  } else if(inMember){
+    document.getElementById('view-team').classList.add('active');
+    document.getElementById('page-title').textContent='Team';
+    document.querySelectorAll('.nav-item')[4].classList.add('active');
+  }
+  renderAll();
+}
+
+function topbarAction(){}
+
+document.getElementById('topbar-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id);}));
+document.getElementById('sug-inp').addEventListener('keydown',e=>{if(e.key==='Enter')addSuggestion();});
+const cm=M('charlie');
+document.getElementById('comment-av').className=`av ${cm.cls}`;
+document.getElementById('comment-av').textContent='CM';
+
+renderAll();
+</script>
+</body>
+</html>
